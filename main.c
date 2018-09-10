@@ -53,13 +53,13 @@ void daemonRoutine(char *path)
 
 	FD_ZERO(&taskParameters->sockets->allSockets);
 	FD_ZERO(&readSocketDescriptors);
-    FD_SET(*listener, &taskParameters->sockets->allSockets);
+    	FD_SET(*listener, &taskParameters->sockets->allSockets);
 
 	taskParameters->sockets->maxSocketDescriptor = *listener;
 
     while (1)
     {
-	    readSocketDescriptors = taskParameters->sockets->allSockets;
+	readSocketDescriptors = taskParameters->sockets->allSockets;
 
         if (select(taskParameters->sockets->maxSocketDescriptor + 1, &readSocketDescriptors, NULL, NULL, NULL) == -1)
         {
@@ -81,7 +81,7 @@ void daemonRoutine(char *path)
                	{
 	                taskParameters->sockets->currentSocket = i;
 	                FD_CLR(i, &taskParameters->sockets->allSockets);
-					thpool_add_work(threadPool, (void *)clientsRequest, (void *)taskParameters);
+			thpool_add_work(threadPool, (void *)clientsRequest, (void *)taskParameters);
                 }
             }
         }
