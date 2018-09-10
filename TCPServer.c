@@ -12,7 +12,8 @@ int *createTCPServer(const char *port, int backlog)
 
 	struct addrinfo *addressInfoList;
 	int status;
-	if ((status = getaddrinfo(NULL, port, &hints, &addressInfoList)) != 0) {
+	if ((status = getaddrinfo(NULL, port, &hints, &addressInfoList)) != 0)
+	{
 		writeLog(LOG_FILE_PATH, 1, gai_strerror(status));
 		exit(status);
 	}
@@ -36,14 +37,13 @@ int *createTCPServer(const char *port, int backlog)
 		}
 
 		struct sockaddr_in *addr_in = (struct sockaddr_in *)addressInfo->ai_addr;
-		writeLog(LOG_FILE_PATH, 2,
-				"The server has been started: ",
-				 inet_ntoa(addr_in->sin_addr));
+		writeLog(LOG_FILE_PATH, 2, "The server has been started: ", inet_ntoa(addr_in->sin_addr));
 
 		break;
 	}
 
-	if (addressInfo == NULL) {
+	if (addressInfo == NULL)
+	{
 		int errorNumber = errno;
 		writeLog(LOG_FILE_PATH, 1, strerror(errorNumber));
 		exit(errorNumber);
@@ -51,7 +51,8 @@ int *createTCPServer(const char *port, int backlog)
 
 	freeaddrinfo(addressInfoList);
 
-	if (listen(*listener, backlog) == -1) {
+	if (listen(*listener, backlog) == -1)
+	{
 		int errorNumber = errno;
 		writeLog(LOG_FILE_PATH, 1, strerror(errorNumber));
 		exit(errorNumber);
@@ -86,8 +87,7 @@ void addNewClient(int listener, fd_set *sockets, int *maxSocketDescriptor)
 			*maxSocketDescriptor = newSocket;
 		}
 
-		writeLog(LOG_FILE_PATH, 2,
-				"New connection from ",
+		writeLog(LOG_FILE_PATH, 2, "New connection from ",
 		        inet_ntop(clientAddress.ss_family, get_in_addr((struct sockaddr*)&clientAddress), remoteIP, INET6_ADDRSTRLEN));
 	}
 }
@@ -149,7 +149,8 @@ int isDataAvaliable(int socket)
 
 void *get_in_addr(struct sockaddr *sa)
 {
-	if (sa->sa_family == AF_INET) {
+	if (sa->sa_family == AF_INET) 
+	{
 		return &(((struct sockaddr_in*)sa)->sin_addr);
 	}
 
