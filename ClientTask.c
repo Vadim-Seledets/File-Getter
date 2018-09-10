@@ -23,25 +23,12 @@ void *clientsRequest(void *params)
 
 		saveFile(path, httpData->fileData);
 
-		writeLog(LOG_FILE_PATH, 5,
-		         "File name: ",
-		         httpData->fileName,
-		         "\t",
-		         "The file has been saved to ",
-		         path);
+		writeLog(LOG_FILE_PATH, 5, "File name: ", httpData->fileName, "\t", "The file has been saved to ", path);
 	}
 	else
 	{
-		writeLog(LOG_FILE_PATH, 9,
-				"File name: ",
-				httpData->fileName,
-				"\t",
-				"Hashes are not the same: ",
-				"[",
-				 httpData->md5,
-				"] : [",
-				 fileHash,
-				 "]");
+		writeLog(LOG_FILE_PATH, 9, "File name: ", httpData->fileName, "\t", "Hashes are not the same: ", "[",
+				 	   httpData->md5, "] : [", fileHash, "]");
 	}
 
 	free(fileHash);
