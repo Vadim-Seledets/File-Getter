@@ -26,7 +26,7 @@ struct HttpRequest *httpParse(char *receivedData, size_t dataLength)
 	}
 	else
 	{
-
+		return NULL;
 	}
 
 	return httpRequest;
@@ -98,13 +98,16 @@ char *getNextHeaderLine(char **restOfData)
 		char *lastChar;
 		if ((lastChar = strstr(*restOfData, CRLF)) != NULL)
 		{
-			if (lastChar - *restOfData > 0) {
+			if (lastChar - *restOfData > 0) 
+			{
 				char *header = (char *) malloc(lastChar - *restOfData + 1);
 				strncpy(header, *restOfData, lastChar - *restOfData);
 				header[lastChar - *restOfData] = '\0';
 
 				return header;
-			} else {
+			} 
+			else
+			{
 				return NULL;
 			}
 		}
