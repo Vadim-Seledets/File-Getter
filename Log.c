@@ -1,5 +1,7 @@
 #include "Log.h"
 
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
 char *getCurrentTime()
 {
 	char *currentTime = (char *)malloc(TIME_STRING_SIZE);
@@ -14,6 +16,7 @@ char *getCurrentTime()
 
 void writeLog(const char *logFilePath, int argc, ...)
 {
+	pthread_mutex_lock(&mutex);
 	FILE *file = fopen(logFilePath, "a");
 
 	if (file == NULL)
@@ -37,4 +40,5 @@ void writeLog(const char *logFilePath, int argc, ...)
 
 	va_end(args);
 	fclose(file);
+	pthread_mutex_unlock(&mutex);
 }
